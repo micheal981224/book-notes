@@ -27,11 +27,9 @@ const port = 3000;
 // Point this at your local PostgreSQL instance.
 // ------------------------------------------------------------
 const db = new pg.Client({
-  user: process.env.DB_USER || "postgres",
-  host: process.env.DB_HOST || "localhost",
-  database: process.env.DB_NAME || "booknotes",
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT || 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
 });
 db.connect();
 
