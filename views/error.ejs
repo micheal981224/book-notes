@@ -1,0 +1,14 @@
+<!-- ============================================================
+     error.ejs — Generic error page
+     Receives: message (string)
+     ============================================================ -->
+<%- include("partials/header") %>
+
+<main class="container container--narrow" style="text-align:center; padding-top:4rem;">
+  <p style="font-size:3rem; margin-bottom:0.5rem;">😕</p>
+  <h1 class="page-header__title">Something went wrong</h1>
+  <p style="margin:1rem 0 2rem; color:var(--muted);"><%= message %></p>
+  <a href="/" class="btn btn--primary">Back to Home</a>
+</main>
+
+<%- include("partials/footer") %>

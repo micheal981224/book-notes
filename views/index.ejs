@@ -1,0 +1,111 @@
+<!-- ============================================================
+     index.ejs — Home page: all books, sortable
+     Receives: books (array), currentSort (string)
+     ============================================================ -->
+<%- include("partials/header") %>
+
+<main class="container">
+
+  <!-- Page header with sort controls -->
+  <header class="page-header">
+    <div class="page-header__text">
+      <h1 class="page-header__title">My Book Notes</h1>
+      <p class="page-header__subtitle">
+        <%= books.length %> book<%= books.length !== 1 ? "s" : "" %> read &amp; noted
+      </p>
+    </div>
+
+    <!-- Sort pills — simple links that reload the page with ?sort=… -->
+    <div class="sort-pills">
+      <span class="sort-pills__label">Sort by</span>
+      <a
+        href="/?sort=rating"
+        class="pill <%= currentSort === 'rating' ? 'pill--active' : '' %>"
+      >
+        ★ Rating
+      </a>
+      <a
+        href="/?sort=recency"
+        class="pill <%= currentSort === 'recency' ? 'pill--active' : '' %>"
+      >
+        🕐 Recency
+      </a>
+      <a
+        href="/?sort=title"
+        class="pill <%= currentSort === 'title' ? 'pill--active' : '' %>"
+      >
+        Aα Title
+      </a>
+    </div>
+  </header>
+
+  <!-- Book grid -->
+  <% if (books.length === 0) { %>
+
+    <div class="empty-state">
+      <p class="empty-state__icon">📖</p>
+      <p class="empty-state__text">No books yet. Start by adding one!</p>
+      <a href="/new" class="btn btn--primary">Add Your First Book</a>
+    </div>
+
+  <% } else { %>
+
+    <section class="book-grid">
+      <% books.forEach((book, i) => { %>
+
+        <article class="card" style="animation-delay: <%= i * 0.04 %>s">
+          <!-- Cover image from Open Library -->
+          <a href="/book/<%= book.id %>" class="card__cover-link">
+            <img
+              class="card__cover"
+              src="<%= book.cover %>"
+              alt="Cover of <%= book.title %>"
+              loading="lazy"
+            />
+          </a>
+
+          <div class="card__body">
+            <!-- Rating badge -->
+            <% if (book.rating) { %>
+              <span class="card__rating"><%= book.rating %>/10</span>
+            <% } %>
+
+            <h2 class="card__title">
+              <a href="/book/<%= book.id %>"><%= book.title %></a>
+            </h2>
+            <p class="card__author"><%= book.author %></p>
+
+            <!-- Truncated notes preview -->
+            <% if (book.notes) { %>
+              <p class="card__notes">
+                <%= book.notes.length > 120 ? book.notes.slice(0, 120) + "…" : book.notes %>
+              </p>
+            <% } %>
+
+            <div class="card__meta">
+              <% if (book.date_read) { %>
+                <time datetime="<%= book.date_read %>">
+                  Read <%= new Date(book.date_read).toLocaleDateString("en-US", { month: "short", year: "numeric" }) %>
+                </time>
+              <% } %>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="card__actions">
+              <a href="/edit/<%= book.id %>" class="btn btn--small btn--ghost">Edit</a>
+              <form action="/delete/<%= book.id %>" method="POST" class="inline-form"
+                    onsubmit="return confirm('Delete "<%= book.title %>"? This can\'t be undone.')">
+                <button type="submit" class="btn btn--small btn--danger">Delete</button>
+              </form>
+            </div>
+          </div>
+        </article>
+
+      <% }) %>
+    </section>
+
+  <% } %>
+
+</main>
+
+<%- include("partials/footer") %>

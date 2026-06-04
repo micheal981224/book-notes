@@ -1,0 +1,117 @@
+<!-- ============================================================
+     new.ejs — Add a new book
+     Receives: book (object|null — for re-populating after error),
+               error (string|null)
+     ============================================================ -->
+<%- include("partials/header") %>
+
+<main class="container container--narrow">
+  <header class="page-header">
+    <h1 class="page-header__title">Add a New Book</h1>
+    <p class="page-header__subtitle">Record something you've read</p>
+  </header>
+
+  <!-- Validation error banner -->
+  <% if (error) { %>
+    <div class="alert alert--error"><%= error %></div>
+  <% } %>
+
+  <section class="form-card">
+    <form action="/new" method="POST" class="book-form" novalidate>
+
+      <!-- Title (required) -->
+      <div class="field">
+        <label for="title" class="field__label">Title *</label>
+        <input
+          id="title"
+          name="title"
+          type="text"
+          class="field__input"
+          required
+          placeholder="e.g. Atomic Habits"
+          value="<%= book ? book.title : '' %>"
+        />
+      </div>
+
+      <!-- Author (required) -->
+      <div class="field">
+        <label for="author" class="field__label">Author *</label>
+        <input
+          id="author"
+          name="author"
+          type="text"
+          class="field__input"
+          required
+          placeholder="e.g. James Clear"
+          value="<%= book ? book.author : '' %>"
+        />
+      </div>
+
+      <!-- ISBN — used to fetch a cover from Open Library -->
+      <div class="field">
+        <label for="isbn" class="field__label">ISBN</label>
+        <input
+          id="isbn"
+          name="isbn"
+          type="text"
+          class="field__input"
+          placeholder="e.g. 0735211299 (for the book cover)"
+          value="<%= book ? book.isbn : '' %>"
+        />
+        <p class="field__hint">
+          Find the ISBN on the book's back cover or
+          <a href="https://openlibrary.org" target="_blank">openlibrary.org</a>.
+          Used to display the cover image.
+        </p>
+      </div>
+
+      <!-- Rating -->
+      <div class="field">
+        <label for="rating" class="field__label">Rating (1–10)</label>
+        <input
+          id="rating"
+          name="rating"
+          type="number"
+          min="1"
+          max="10"
+          class="field__input field__input--short"
+          placeholder="8"
+          value="<%= book ? book.rating : '' %>"
+        />
+      </div>
+
+      <!-- Date read -->
+      <div class="field">
+        <label for="date_read" class="field__label">Date Read</label>
+        <input
+          id="date_read"
+          name="date_read"
+          type="date"
+          class="field__input field__input--short"
+          value="<%= book ? book.date_read : '' %>"
+        />
+      </div>
+
+      <!-- Notes -->
+      <div class="field">
+        <label for="notes" class="field__label">Notes</label>
+        <textarea
+          id="notes"
+          name="notes"
+          rows="8"
+          class="field__textarea"
+          placeholder="Key takeaways, favourite quotes, things you want to remember…"
+        ><%= book ? book.notes : '' %></textarea>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="submit" class="btn btn--primary">Save Book</button>
+        <a href="/" class="btn btn--ghost">Cancel</a>
+      </div>
+
+    </form>
+  </section>
+</main>
+
+<%- include("partials/footer") %>

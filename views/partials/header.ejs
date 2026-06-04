@@ -1,0 +1,33 @@
+<!-- ============================================================
+      Header partial -- shared <head> and top nav bar.
+     Included at the top of every page via include().
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Notes</title>
+
+  <!-- Google Fonts — distinctive pair: DM Serif Display + Instrument Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <!-- Top navigation -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">
+        <span class="nav__logo-icon">📚</span>
+        <span class="nav__logo-text">Book Notes</span>
+      </a>
+      <a href="/new" class="nav__add-btn">+ Add Book</a>
+    </div>
+  </nav>
